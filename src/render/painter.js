@@ -114,6 +114,8 @@ class Painter {
         this.emptyProgramConfiguration = new ProgramConfiguration();
 
         this.crossTileSymbolIndex = new CrossTileSymbolIndex();
+
+        this.startTime = Date.now();
     }
 
     /*
@@ -455,6 +457,7 @@ class Painter {
     }
 
     _createProgramCached(name: string, programConfiguration: ProgramConfiguration): Program {
+        //if (name == 'circle') console.log(shaders.circle)
         this.cache = this.cache || {};
         const key = `${name}${programConfiguration.cacheKey || ''}${this._showOverdrawInspector ? '/overdraw' : ''}`;
         if (!this.cache[key]) {

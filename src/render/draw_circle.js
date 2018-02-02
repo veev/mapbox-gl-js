@@ -48,6 +48,8 @@ function drawCircles(painter: Painter, sourceCache: SourceCache, layer: CircleSt
             first = false;
         }
 
+        gl.uniform1f(program.uniforms.sinTime,(Date.now() - painter.startTime) / 100);
+        //console.log(Math.sin(Date.now() - painter.startTime));
         gl.uniform1f(program.uniforms.u_camera_to_center_distance, painter.transform.cameraToCenterDistance);
         gl.uniform1i(program.uniforms.u_scale_with_map, layer.paint.get('circle-pitch-scale') === 'map' ? 1 : 0);
         if (layer.paint.get('circle-pitch-alignment') === 'map') {

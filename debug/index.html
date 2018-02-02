@@ -22,9 +22,24 @@ var map = window.map = new mapboxgl.Map({
     container: 'map',
     zoom: 12.5,
     center: [-77.01866, 38.888],
-    style: 'mapbox://styles/mapbox/streets-v10',
+    style: 'mapbox://styles/mapbox/dark-v9',
     hash: true
 });
+
+map.on('load', () => {
+
+    map.addLayer({
+    type: 'circle',
+    source: 'composite',
+    'source-layer': 'poi_label',
+    'id': 'test',
+    'paint': {
+        'circle-color': 'red',
+        'circle-radius': 20,
+        'circle-blur': ["/", ['get', 'scalerank'], 5]
+        }
+    })
+})
 
 </script>
 </body>

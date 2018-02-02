@@ -3,6 +3,7 @@ uniform bool u_scale_with_map;
 uniform bool u_pitch_with_map;
 uniform vec2 u_extrude_scale;
 uniform highp float u_camera_to_center_distance;
+uniform float sinTime;
 
 attribute vec2 a_pos;
 
@@ -15,6 +16,7 @@ attribute vec2 a_pos;
 #pragma mapbox: define lowp float stroke_opacity
 
 varying vec3 v_data;
+varying float v_debug;
 
 void main(void) {
     #pragma mapbox: initialize highp vec4 color
@@ -24,6 +26,9 @@ void main(void) {
     #pragma mapbox: initialize highp vec4 stroke_color
     #pragma mapbox: initialize mediump float stroke_width
     #pragma mapbox: initialize lowp float stroke_opacity
+
+    float newRadius = (sin(sinTime * blur) + 1.0) * radius;
+    //float newRadius = radius;
 
     // unencode the extrusion vector that we snuck into the a_pos vector
     vec2 extrude = vec2(mod(a_pos, 2.0) * 2.0 - 1.0);
@@ -57,7 +62,9 @@ void main(void) {
     // This is a minimum blur distance that serves as a faux-antialiasing for
     // the circle. since blur is a ratio of the circle's size and the intent is
     // to keep the blur at roughly 1px, the two are inversely related.
-    lowp float antialiasblur = 1.0 / DEVICE_PIXEL_RATIO / (radius + stroke_width);
+    lowp float antialiasblur = newRadius * 2.0 / DEVICE_PIXEL_RATIO / (radius + stroke_width);
 
     v_data = vec3(extrude.x, extrude.y, antialiasblur);
+
+    v_debug = (sinTime + 1.0 + blur * 3.0);
 }

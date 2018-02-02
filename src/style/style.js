@@ -273,23 +273,24 @@ class Style extends Evented {
     }
 
     hasTransitions() {
-        if (this.light && this.light.hasTransition()) {
-            return true;
-        }
+        return true;
+        // if (this.light && this.light.hasTransition()) {
+        //     return true;
+        // }
 
-        for (const id in this.sourceCaches) {
-            if (this.sourceCaches[id].hasTransition()) {
-                return true;
-            }
-        }
+        // for (const id in this.sourceCaches) {
+        //     if (this.sourceCaches[id].hasTransition()) {
+        //         return true;
+        //     }
+        // }
 
-        for (const id in this._layers) {
-            if (this._layers[id].hasTransition()) {
-                return true;
-            }
-        }
+        // for (const id in this._layers) {
+        //     if (this._layers[id].hasTransition()) {
+        //         return true;
+        //     }
+        // }
 
-        return false;
+        // return false;
     }
 
     _checkLoaded() {

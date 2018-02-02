@@ -7,6 +7,7 @@
 #pragma mapbox: define lowp float stroke_opacity
 
 varying vec3 v_data;
+varying float v_debug;
 
 void main() {
     #pragma mapbox: initialize highp vec4 color
@@ -21,7 +22,8 @@ void main() {
     float extrude_length = length(extrude);
 
     lowp float antialiasblur = v_data.z;
-    float antialiased_blur = -max(blur, antialiasblur);
+    float antialiased_blur = -v_data.z;
+    // float antialiased_blur = -max(blur, antialiasblur);
 
     float opacity_t = smoothstep(0.0, antialiased_blur, extrude_length - 1.0);
 
@@ -33,6 +35,7 @@ void main() {
 
     gl_FragColor = opacity_t * mix(color * opacity, stroke_color * stroke_opacity, color_t);
 
+    //gl_FragColor.r = v_debug;
 #ifdef OVERDRAW_INSPECTOR
     gl_FragColor = vec4(1.0);
 #endif
